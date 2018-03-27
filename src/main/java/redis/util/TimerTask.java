@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 public class TimerTask implements CommandLineRunner{
 
 	Logger log = LoggerFactory.getLogger(TimerTask.class);
+
 	@Override
 	public void run(String... arg0) throws Exception {
 

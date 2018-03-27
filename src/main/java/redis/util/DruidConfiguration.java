@@ -2,9 +2,9 @@ package redis.util;
 
 import com.alibaba.druid.pool.DruidDataSource;  
 import com.alibaba.druid.support.http.StatViewServlet;  
-import com.alibaba.druid.support.http.WebStatFilter;  
+import com.alibaba.druid.support.http.WebStatFilter;
+
 import org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator;  
-import org.springframework.boot.bind.RelaxedPropertyResolver;  
 import org.springframework.boot.web.servlet.FilterRegistrationBean;  
 import org.springframework.boot.web.servlet.ServletRegistrationBean;  
 import org.springframework.context.EnvironmentAware;  
@@ -12,34 +12,49 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;  
 import org.springframework.core.env.Environment;  
   
-import javax.sql.DataSource;  
+import javax.sql.DataSource;
+
+import java.io.IOException;
 import java.sql.SQLException;  
 import java.util.HashMap;  
-import java.util.Map;  
+import java.util.Map;
+import java.util.Properties;  
 
 @Configuration
 public class DruidConfiguration implements EnvironmentAware {  
   
-    private RelaxedPropertyResolver propertyResolver;  
+//    private RelaxedPropertyResolver propertyResolver;  
   
+	private Properties prop = null;
+	
+	public DruidConfiguration() {
+		prop = new Properties();
+		try {
+			prop.load(Thread.currentThread().getContextClassLoader().getResourceAsStream("db.properties"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
     public void setEnvironment(Environment env) {  
-        this.propertyResolver = new RelaxedPropertyResolver(env, "spring.datasource.");  
+//        this.propertyResolver = new RelaxedPropertyResolver(env, "spring.datasource.");  
     }  
   
     @Bean  
     public DataSource dataSource() {  
         DruidDataSource datasource = new DruidDataSource();  
-        datasource.setUrl(propertyResolver.getProperty("url"));  
-        datasource.setDriverClassName(propertyResolver.getProperty("driverClassName"));  
-        datasource.setUsername(propertyResolver.getProperty("username"));  
-        datasource.setPassword(propertyResolver.getProperty("password"));  
-        datasource.setInitialSize(Integer.valueOf(propertyResolver.getProperty("initialSize")));  
-        datasource.setMinIdle(Integer.valueOf(propertyResolver.getProperty("minIdle")));
-        datasource.setValidationQuery(propertyResolver.getProperty("validationQuery"));
-        datasource.setMaxWait(Long.valueOf(propertyResolver.getProperty("maxWait")));  
-        datasource.setMaxActive(Integer.valueOf(propertyResolver.getProperty("maxActive")));  
+        datasource.setUrl(prop.getProperty("url"));  
+        datasource.setDriverClassName(prop.getProperty("driver-class-name"));  
+        datasource.setUsername(prop.getProperty("username"));  
+        datasource.setPassword(prop.getProperty("password"));  
+        datasource.setInitialSize(Integer.valueOf(prop.getProperty("initialSize")));  
+        datasource.setMinIdle(Integer.valueOf(prop.getProperty("minIdle")));
+        datasource.setValidationQuery(prop.getProperty("validationQuery"));
+        datasource.setMaxWait(Long.valueOf(prop.getProperty("maxWait")));  
+        datasource.setMaxActive(Integer.valueOf(prop.getProperty("maxActive")));  
         datasource.setMinEvictableIdleTimeMillis(  
-        Long.valueOf(propertyResolver.getProperty("minEvictableIdleTimeMillis")));  
+        Long.valueOf(prop.getProperty("minEvictableIdleTimeMillis")));  
         try {  
             datasource.setFilters("stat");  
         } catch (SQLException e) {  
