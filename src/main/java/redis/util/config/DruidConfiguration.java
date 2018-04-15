@@ -1,4 +1,4 @@
-package redis.util;
+package redis.util.config;
 
 import com.alibaba.druid.pool.DruidDataSource;  
 import com.alibaba.druid.support.http.StatViewServlet;  

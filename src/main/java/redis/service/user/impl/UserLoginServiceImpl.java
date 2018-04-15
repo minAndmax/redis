@@ -1,4 +1,4 @@
-package redis.service.impl;
+package redis.service.user.impl;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
 import redis.dao.UserLoginMapper;
-import redis.service.UserLoginService;
+import redis.service.user.UserLoginService;
 import redis.util.KeyWord;
 import redis.util.MD5Util;
 import redis.vo.UserInfo;

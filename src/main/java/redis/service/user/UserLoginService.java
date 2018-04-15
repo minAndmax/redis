@@ -1,6 +1,4 @@
-package redis.service;
-
-import java.util.List;
+package redis.service.user;
 
 import javax.servlet.http.HttpServletRequest;
 

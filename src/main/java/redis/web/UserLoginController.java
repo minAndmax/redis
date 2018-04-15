@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
-import redis.service.UserLoginService;
+import redis.service.user.UserLoginService;
 import redis.vo.UserInfo;
 /**
  * 登录
